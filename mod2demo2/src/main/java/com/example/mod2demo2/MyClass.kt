@@ -6,20 +6,20 @@ data class BaseballTeam(
     var division: String
 )
 
-class CookingRecipe(
+open class CookingRecipe(
     private var _name: String,
     var ingredients: List<String>,
     var cookingTime: Int = 0
 ) {
-    var name : String
+    var name: String
         get() = this._name
         set(value) {
             this._name = value
         }
 
-    fun displayIngredientsList(){
-        println("List des ingrédients : ")
-        for (ingredient in this.ingredients){
+    open fun displayIngredientsList() {
+        println("Liste des ingrédients : ")
+        for (ingredient in this.ingredients) {
             println(ingredient)
         }
     }
@@ -28,6 +28,33 @@ class CookingRecipe(
         return "$name se prépare en $cookingTime minutes"
     }
 }
+
+class CookingRecipeChild(
+    var childThing: String,
+    var childName: String,
+    var childIngredients: List<String> = emptyList()
+) : CookingRecipe(_name = childName, ingredients = childIngredients){
+
+    //attributs de classe
+    companion object{
+        //tout ce qui est ici est considéré comme un élément static
+        var truc  = "Coucou"
+        fun saytruc(){
+            println(truc)
+        }
+    }
+
+    override fun displayIngredientsList() {
+        super.displayIngredientsList()
+    }
+}
+
+//class avec une seule instance, équivalent à un singleton
+// à utiliser pour stocker des constantes
+object Singleton{
+    val NAME = "Sylvain"
+}
+
 
 fun main() {
 
@@ -47,5 +74,9 @@ fun main() {
     c1.name = "Hachis parmentier"
     println(c1.toString())
     c1.displayIngredientsList()
+
+    CookingRecipeChild.saytruc()
+
+    println(Singleton.NAME)
 
 }

@@ -34,29 +34,77 @@ package com.example.mod2demo1
 //}
 
 
+//fun main() {
+//
+//    //for classique
+//    for(i in 0..10){
+//        println(i)
+//    }
+//
+//    //modification du pas
+//    for(i in 0..10 step 2){
+//        println(i)
+//    }
+//
+//    for(i in 10 downTo 0){
+//        println(i)
+//    }
+//
+//    val ias = listOf("Chat GPT", "Gemini", "Claude", "Bolt")
+//
+//    for(ia in ias){
+//        println("L'ia s'appelle $ia")
+//    }
+//}
+
+
 fun main() {
 
-    //for classique
-    for(i in 0..10){
-        println(i)
+    //callback
+    val articles = List(size = 100) { index ->
+        "Article $index"
+        //"Article $it" si pas de renommage du paramètre
     }
 
-    //modification du pas
-    for(i in 0..10 step 2){
-        println(i)
+//    for (article in articles) {
+//        println(article)
+//    }
+
+    val colors = mutableListOf("Bleu", "Rouge", "Vert", "Jaune")
+    colors.add("Rose")
+    colors += "Noir"
+
+    val colorsWithAnO = colors.filter {
+        it.contains("o")
+    }
+    for (color in colorsWithAnO) {
+        println(color)
     }
 
-    for(i in 10 downTo 0){
-        println(i)
+    //fonction d'extension
+    fun String.sayHello(): String {
+        return "$this dit bonjour !";
     }
 
-    val ias = listOf("Chat GPT", "Gemini", "Claude", "Bolt")
+    println("Michel".sayHello())
 
-    for(ia in ias){
-        println("L'ia s'appelle $ia")
-    }
+    //lazy
+    var name = "Michel"
+    val message by lazy { "Hello $name" }
+    println(message)
+    name = "Robert"
+    println(message)
+
+    //gestion de la nullité
+    var firstname : String? = null
+    //firstname = "Michel"
+
+    //afficher la taille de mon mot
+    println(firstname?.length ?: 256)
+
+
+
 }
-
 
 
 

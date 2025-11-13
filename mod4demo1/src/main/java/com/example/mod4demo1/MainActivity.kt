@@ -28,17 +28,32 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             CoursAndroidHCDA2410Theme {
-                Form()
+                ParentForm()
             }
         }
     }
 }
 
 @Composable
-fun Form(modifier: Modifier = Modifier) {
+fun ParentForm(modifier: Modifier = Modifier) {
+    var lastname by remember { mutableStateOf("") }
+    Form(
+        lastnameValue = lastname,
+        onLastnameChange = {
+            lastname = it
+        }
+    )
+
+}
+
+@Composable
+fun Form(
+    modifier: Modifier = Modifier,
+    lastnameValue : String,
+    onLastnameChange : (String) -> Unit
+) {
 
     var firstname = ""
-    var lastname = remember { mutableStateOf("") }
     var age by rememberSaveable {
         mutableStateOf("")
     }
@@ -52,10 +67,8 @@ fun Form(modifier: Modifier = Modifier) {
             label = { Text("Firstname ") }
         )
         TextField(
-            value = lastname.value,
-            onValueChange = {
-                lastname.value = it
-            },
+            value = lastnameValue,
+            onValueChange = onLastnameChange,
             label = { Text("Lastname ") }
         )
         TextField(
@@ -74,6 +87,6 @@ fun Form(modifier: Modifier = Modifier) {
 @Preview
 @Composable
 private fun Preview() {
-    Form()
+//    Form()
 }
 

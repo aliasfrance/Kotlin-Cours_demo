@@ -5,13 +5,13 @@ plugins {
 }
 
 android {
-    namespace = "com.example.mod4demo2"
+    namespace = "com.example.mod4demo3"
     compileSdk {
         version = release(36)
     }
 
     defaultConfig {
-        applicationId = "com.example.mod4demo2"
+        applicationId = "com.example.mod4demo3"
         minSdk = 26
         targetSdk = 36
         versionCode = 1
@@ -42,10 +42,6 @@ android {
 }
 
 dependencies {
-
-    //accès à la méthode viewModel()
-    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.9.2")
-
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)

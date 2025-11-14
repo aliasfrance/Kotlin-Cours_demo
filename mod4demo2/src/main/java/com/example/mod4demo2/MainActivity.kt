@@ -5,23 +5,19 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material.icons.filled.KeyboardArrowUp
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.mod4demo2.ui.theme.CoursAndroidHCDA2410Theme
 
 class MainActivity : ComponentActivity() {
@@ -37,16 +33,21 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun Counter(modifier: Modifier = Modifier) {
+fun Counter(
+    viewModel: CounterViewModel = viewModel(),
+    modifier: Modifier = Modifier
+) {
 
-    var counter by remember { mutableStateOf(0) }
+    val counter by viewModel.counter.collectAsState()
+//    val plus by viewModel.plus.collectAsState()
 
     Row(
         verticalAlignment = Alignment.CenterVertically
     ){
         IconButton(
             onClick = {
-                counter--
+                viewModel.decremente()
+                viewModel.plus++
             }
         ) {
             Icon(
@@ -55,10 +56,10 @@ fun Counter(modifier: Modifier = Modifier) {
             )
 
         }
-        Text(text = counter.toString())
+        Text(text = "$counter, + = ${viewModel.plus}")
         IconButton(
             onClick = {
-                counter++
+                viewModel.incremente()
             }
         ) {
             Icon(

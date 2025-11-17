@@ -1,10 +1,13 @@
 package com.example.mod5demo3
 
+import android.Manifest
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
+import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -27,7 +30,7 @@ class MainActivity : ComponentActivity() {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
                     Column(
                         modifier = Modifier.padding(innerPadding)
-                    ){
+                    ) {
                         Call()
                     }
                 }
@@ -41,11 +44,24 @@ fun Call(modifier: Modifier = Modifier) {
 
     val context = LocalContext.current
 
-    Button(
-        onClick = {
+    val requestPermissionCall = rememberLauncherForActivityResult(
+        ActivityResultContracts.RequestPermission()
+    ) { isGranted ->
+        if (isGranted) {
             Intent(Intent.ACTION_CALL, "tel:0606060606".toUri()).also {
                 context.startActivity(it)
             }
+        }else{
+            Intent(Intent.ACTION_DIAL, "tel:0606060606".toUri()).also {
+                context.startActivity(it)
+            }
+        }
+
+    }
+
+    Button(
+        onClick = {
+            requestPermissionCall.launch(Manifest.permission.CALL_PHONE)
         }
     ) {
         Text(text = "Call !")
